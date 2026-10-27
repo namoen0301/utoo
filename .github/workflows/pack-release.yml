@@ -62,13 +62,12 @@ jobs:
             elf_machine: Advanced Micro Devices X86-64
             file_arch_pattern: x86-64
             musl_builder: true
-          # swc_plugin_runner not supported on aarch64 windows now
-          # - host: windows-latest
-          #   target: aarch64-pc-windows-msvc
-          #   build: |
-          #     git config --system core.longpaths true &&
-          #     rustup target add aarch64-pc-windows-msvc &&
-          #     npm run build:binding --workspace=@utoo/pack -- --target aarch64-pc-windows-msvc
+          - host: windows-latest
+            target: aarch64-pc-windows-msvc
+            build: |
+               git config --system core.longpaths true &&
+               rustup target add aarch64-pc-windows-msvc &&
+               npm run build:binding --workspace=@utoo/pack -- --target aarch64-pc-windows-msvc
           - host: ubuntu-latest
             binding: pack.win32-x64-msvc.node
             windows_builder: true
