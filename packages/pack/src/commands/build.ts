@@ -14,7 +14,7 @@ import {
   isTruthyEnv,
   normalizeTurbopackMemoryEviction,
 } from "../utils/env";
-import { findRootDir } from "../utils/findRoot";
+import { resolveRootPath } from "../utils/findRoot";
 import { HtmlGenerationManager } from "../utils/HtmlGenerationManager";
 import { processHtmlEntry } from "../utils/htmlEntry";
 import { acquirePersistentCacheLock } from "../utils/lockfile";
@@ -37,10 +37,7 @@ export function build(
 ) {
   const bundleOptions = resolveBundleOptions(options, projectPath, rootPath);
 
-  if (!rootPath) {
-    // help user to find the rootDir automatically.
-    rootPath = findRootDir(projectPath || process.cwd());
-  }
+  rootPath = resolveRootPath(projectPath, rootPath);
   return buildInternal(bundleOptions, projectPath, rootPath);
 }
 

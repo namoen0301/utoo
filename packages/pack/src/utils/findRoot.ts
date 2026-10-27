@@ -2,6 +2,16 @@ import findUp from "find-up";
 import fs from "fs";
 import path from "path";
 
+export function resolveRootPath(
+  projectPath?: string,
+  rootPath?: string,
+): string {
+  const envRootPath = process.env.UTOO_ROOT_PATH;
+  return envRootPath
+    ? path.resolve(envRootPath)
+    : rootPath || findRootDir(projectPath || process.cwd());
+}
+
 export function findRootLockFile(cwd: string) {
   return findUp.sync(
     [
@@ -55,6 +65,10 @@ export function findWorkspacesRoot(cwd: string) {
   return path.dirname(pkgJsonFiles[pkgJsonFiles.length - 1]);
 }
 
+/**
+ * Discover the existing project/workspace root for framework configuration.
+ * UTOO_ROOT_PATH overrides the bundler's access root, not this directory.
+ */
 export function findRootDir(cwd: string): string {
   const lockFile = findRootLockFile(cwd);
   if (!lockFile) return findWorkspacesRoot(cwd);

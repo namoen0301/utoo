@@ -159,6 +159,23 @@ Node.js, or library builds.
 }
 ```
 
+### Worktree and Symlink Debugging
+
+Set `UTOO_ROOT_PATH` to a common parent containing the project and the real paths
+of linked dependencies when debugging worktrees or symlinks:
+
+```bash
+UTOO_ROOT_PATH=/path/to/common-parent utx up dev
+# Relative paths resolve from the current working directory:
+UTOO_ROOT_PATH=.. utx up build
+```
+
+Precedence is `UTOO_ROOT_PATH` > explicit `rootPath` > automatic detection. Empty
+values are ignored. This applies to `build`, `serve`, and direct project creation,
+where `rootPath` can be omitted. Updates that omit it retain the existing root.
+`findRootDir()` and the project directory stay unchanged, preserving framework
+plugin lookup and generated file locations.
+
 ## 🛠️ Development
 
 ### Prerequisites
